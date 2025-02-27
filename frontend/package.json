@@ -1,12 +1,11 @@
 {
   "name": "frontend",
   "version": "0.1.0",
-  "homepage": "https://mani-1986.github.io/AI-Portfolio/",
+  "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "deploy": "gh-pages -d dist"
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.0.9",
@@ -27,7 +26,6 @@
     "autoprefixer": "^10.4.20",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
-    "gh-pages": "^6.3.0",
     "postcss": "^8.5.3",
     "tailwindcss": "^4.0.9"
   },
