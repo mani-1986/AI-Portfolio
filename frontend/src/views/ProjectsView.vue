@@ -17,9 +17,9 @@
     data() {
       return {
         projects: [
-          { id: 1, name: 'Project 1', description: 'A Vue.js project', image: 'https://via.placeholder.com/300' },
-          { id: 2, name: 'Project 2', description: 'An SEO-optimized website', image: 'https://via.placeholder.com/300' },
-          { id: 3, name: 'Project 3', description: 'A CSS-heavy design', image: 'https://via.placeholder.com/300' },
+          { id: 1, name: 'Project 1', description: 'A Vue.js project' },
+          { id: 2, name: 'Project 2', description: 'An SEO-optimized website' },
+          { id: 3, name: 'Project 3', description: 'A CSS-heavy design' },
         ],
       };
     },
