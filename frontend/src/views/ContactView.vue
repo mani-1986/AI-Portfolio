@@ -21,13 +21,38 @@
       };
     },
     methods: {
-      submitForm() {
-        alert('Message sent!');
+  async submitForm() {
+    this.successMessage = '';
+    this.errorMessage = '';
+
+    try {
+      const response = await fetch('http://localhost:3000/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: this.name,
+          email: this.email,
+          message: this.message,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        this.successMessage = data.message;
         this.name = '';
         this.email = '';
         this.message = '';
-      },
-    },
+      } else {
+        this.errorMessage = data.error || 'Something went wrong. Please try again.';
+      }
+    } catch (error) {
+      this.errorMessage = 'Failed to send message. Please try again.';
+    }
+  },
+},
   };
   </script>
   
