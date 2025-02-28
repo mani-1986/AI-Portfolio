@@ -90,6 +90,11 @@ app.options('/api/chat', (req, res) => {
 app.post('/api/chat', async (req, res) => {
   const { message } = req.body;
 
+   // Validate the message
+   if (!message || typeof message !== 'string') {
+    return res.status(400).json({ error: 'Invalid or missing message in request body' });
+  }
+
   // Check if the response is cached
   const cachedResponse = cache.get(message);
   if (cachedResponse) {
