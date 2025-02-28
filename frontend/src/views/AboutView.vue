@@ -28,14 +28,22 @@
 </template>
 
 <script>
-import skills from '../../../backend/skills';
-
 export default {
   name: 'AboutView',
   data() {
     return {
-      skills,
+      skills: [], // Initialize skills as an empty array
     };
+  },
+  async created() {
+    try {
+      // Fetch skills data from the backend API
+      const response = await fetch(`${process.env.VUE_APP_API_URL}/api/skills`);
+      const data = await response.json();
+      this.skills = data;
+    } catch (error) {
+      console.error('Error fetching skills:', error);
+    }
   },
 };
 </script>

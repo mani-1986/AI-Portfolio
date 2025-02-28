@@ -14,15 +14,22 @@
 </template>
 
 <script>
-// Import the projects data from the backend file
-const projects = require('../../../backend/projects');
+// import axios from 'axios';
 
 export default {
   name: 'ProjectsView',
   data() {
     return {
-      projects, // Use the imported projects array
+      projects: [],
     };
+  },
+  async created() {
+    try {
+      const response = await fetch(`${process.env.VUE_APP_API_URL}/api/projects`);
+      this.projects = await response.json();
+    } catch (error) {
+      console.error('Error fetching projects:', error);
+    }
   },
 };
 </script>

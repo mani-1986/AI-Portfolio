@@ -3,27 +3,33 @@
     <button class="chatbot-button" @click="toggleChat">Chat</button>
     <div class="chat-window" v-if="isOpen">
       <div class="chat-header">Chatbot</div>
-      <div class="chat-body">
+      <div class="chat-body chatbot-messages">
         <div v-for="(msg, index) in messages" :key="index" :class="msg.sender">
           <p>{{ msg.text }}</p>
         </div>
       </div>
       <form @submit.prevent="sendMessage">
-        <input v-model="userMessage" type="text" placeholder="Type a message..." />
+        <input
+          v-model="userInput"
+          type="text"
+          placeholder="Type your message..."
+          @keyup.enter="sendMessage"
+        />
         <button type="submit">Send</button>
+
       </form>
     </div>
   </div>
 </template>
-  
+
 <script>
 export default {
   name: 'TheChatbot',
   data() {
     return {
-      isOpen: false,
-      userMessage: '',
+      userInput: '',
       messages: [],
+      isOpen: false,
     };
   },
   methods: {
@@ -31,39 +37,47 @@ export default {
       this.isOpen = !this.isOpen;
     },
     async sendMessage() {
-    if (this.userMessage.trim() === '') return;
+  if (!this.userInput.trim() || this.isSending) return; // Ignore if already sending
 
-    // Add user's message to the chat history
-    this.messages.push({ text: this.userMessage, sender: 'user' });
+  this.isSending = true; // Disable the button
 
-    // Clear the input field
-    const userMessage = this.userMessage;
-    this.userMessage = '';
+  // Add user message to the chat
+  this.messages.push({ sender: 'user', text: this.userInput });
 
-    // Call your backend API
-    try {
-      const response = await fetch('http://localhost:3000/chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ message: userMessage }),
-      });
+  try {
+    // Send user message to the backend API
+    const response = await fetch(`${process.env.VUE_APP_API_URL}/api/chat`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ message: this.userInput }),
+    });
 
-      const data = await response.json();
-      const botMessage = data.response;
+    const data = await response.json();
 
-      // Add bot's response to the chat history
-      this.messages.push({ text: botMessage, sender: 'bot' });
-    } catch (error) {
-      console.error('Error fetching bot response:', error);
-      this.messages.push({ text: 'Sorry, something went wrong.', sender: 'bot' });
-    }
-  },
+    // Add bot response to the chat
+    this.messages.push({ sender: 'bot', text: data.response });
+  } catch (error) {
+    console.error('Error sending message:', error);
+    this.messages.push({ sender: 'bot', text: 'Sorry, something went wrong. Please try again.' });
+  } finally {
+    this.isSending = false; // Re-enable the button
+  }
+
+  // Clear the input field
+  this.userInput = '';
+
+  // Scroll to the bottom of the chat
+  this.$nextTick(() => {
+    const chatContainer = this.$el.querySelector('.chatbot-messages');
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+  });
+},
   },
 };
 </script>
-  
+
 <style scoped>
 .chatbot {
   position: fixed;
