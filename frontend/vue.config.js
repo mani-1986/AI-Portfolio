@@ -5,7 +5,7 @@ module.exports = defineConfig({
   devServer: {
     proxy: {
       '/api': {
-        target: 'http://localhost:8081', // Backend URL
+        target: 'https://ai-portfolio-ggcj.onrender.com', // Backend URL
         changeOrigin: true,
         secure: false,
       },
