@@ -77,7 +77,7 @@ const identifyQueryType = (message) => {
 };
 
 // Chat endpoint
-app.post('/chat', async (req, res) => {
+app.post('/api/chat', async (req, res) => {
   const { message } = req.body;
 
   // Check if the response is cached
