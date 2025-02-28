@@ -30,6 +30,12 @@ app.get('/api/projects', (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+app.options('/api/projects', (req, res) => {
+  res.header('Access-Control-Allow-Origin', process.env.FRONTEND_URL || 'http://localhost:8080');
+  res.header('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.send();
+});
 app.get('/api/skills', (req, res) => {
   try {
     res.json(skills);
@@ -37,6 +43,12 @@ app.get('/api/skills', (req, res) => {
     console.error('Error fetching skills:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
+});
+app.options('/api/sills', (req, res) => {
+  res.header('Access-Control-Allow-Origin', process.env.FRONTEND_URL || 'http://localhost:8080');
+  res.header('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.send();
 });
 
 // Cache setup (1-hour TTL)
@@ -79,6 +91,13 @@ const identifyQueryType = (message) => {
 // Chat endpoint
 app.post('/api/chat', async (req, res) => {
   const { message } = req.body;
+
+  app.options('/api/chat', (req, res) => {
+    res.header('Access-Control-Allow-Origin', process.env.FRONTEND_URL || 'http://localhost:8080');
+    res.header('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.send();
+  });
 
   // Check if the response is cached
   const cachedResponse = cache.get(message);
