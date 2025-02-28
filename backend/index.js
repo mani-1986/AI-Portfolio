@@ -217,7 +217,12 @@ app.post('/api/chat', async (req, res) => {
 const contactRouter = require('./contactApi');
 // Handle preflight requests
 app.use('/api', contactRouter);
-app.options('/api/contact', cors()); // Allow preflight requests for /api/contact
+app.options('/api/contact', (req, res) => {
+  res.header('Access-Control-Allow-Origin', process.env.FRONTEND_URL || 'http://localhost:8080');
+  res.header('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.send();
+});
 
 // Start the server
 app.listen(port, () => {
