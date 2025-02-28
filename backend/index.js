@@ -13,7 +13,13 @@ const projects = require('./projects');
 const skills = require('./skills');
 
 // Middleware
-app.use(cors()); // Enable CORS
+// Enable CORS
+app.use(cors({
+  origin: process.env.FRONTEND_URL || 'http://localhost:8080', // Allow requests from the frontend
+  methods: ['GET', 'POST', 'OPTIONS'], // Allow only specific HTTP methods
+  allowedHeaders: ['Content-Type', 'Authorization'], // Allow specific headers
+  credentials: true, // Allow cookies and credentials
+}));
 app.use(express.json()); // Parse JSON request bodies
 
 app.get('/api/projects', (req, res) => {
@@ -189,7 +195,10 @@ app.post('/chat', async (req, res) => {
 });
 
 // Use the contact API
-app.use('/api', contactApi);
+const contactRouter = require('./contactApi');
+// Handle preflight requests
+app.use('/api', contactRouter);
+app.options('/api/contact', cors()); // Allow preflight requests for /api/contact
 
 // Start the server
 app.listen(port, () => {
