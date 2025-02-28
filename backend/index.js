@@ -8,11 +8,30 @@ const { resume } = require('./constants'); // Import resume data
 require('dotenv').config(); // Load environment variables
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
+const projects = require('./projects');
+const skills = require('./skills');
 
 // Middleware
 app.use(cors()); // Enable CORS
 app.use(express.json()); // Parse JSON request bodies
+
+app.get('/api/projects', (req, res) => {
+  try {
+    res.json(projects);
+  } catch (error) {
+    console.error('Error fetching projects:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+app.get('/api/skills', (req, res) => {
+  try {
+    res.json(skills);
+  } catch(error) {
+    console.error('Error fetching skills:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 
 // Cache setup (1-hour TTL)
 const cache = new NodeCache({ stdTTL: 3600 });
@@ -174,5 +193,5 @@ app.use('/api', contactApi);
 
 // Start the server
 app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+  console.log(`Server running on port ${port}`);
 });
