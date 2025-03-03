@@ -24,7 +24,7 @@ app.use(cors({
 app.use(express.json()); // Parse JSON request bodies
 
 // **Serve Vue frontend**
-const distPath = path.join(__dirname, 'dist');
+const distPath = path.join(__dirname, '../frontend/dist');
 app.use(express.static(distPath));
 
 // **Fallback to index.html for Vue history mode**
