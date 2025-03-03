@@ -2,6 +2,7 @@ const express = require('express');
 const axios = require('axios');
 const cors = require('cors');
 const NodeCache = require('node-cache');
+const path = require('path');
 const nlp = require('compromise'); // Import Compromise.js
 const contactApi = require('./contactApi'); // Import contact API
 const { resume } = require('./constants'); // Import resume data
