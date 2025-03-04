@@ -1,6 +1,6 @@
 <template>
     <footer class="footer">
-      <p>&copy; 2023 My Portfolio. All rights reserved.</p>
+      <p>&copy; 2025 Manivas Medishetty Portfolio. All rights reserved.</p>
     </footer>
   </template>
   
