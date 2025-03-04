@@ -1,8 +1,8 @@
 <template>
     <section class="home">
       <div class="hero">
-        <h1>Welcome to My Portfolio</h1>
-        <p>I'm a passionate developer building amazing web applications.</p>
+        <h1>Welcome to Manivas Medishetty's Portfolio</h1>
+        <p>Driven by curiosity and innovation, I am a passionate developer eager to embrace new challenges, expand my skill set, and craft impactful digital experiences. I thrive in dynamic environments where I can continuously learn, explore emerging technologies, and contribute to cutting-edge solutions.</p>
         <router-link to="/projects" class="cta-button">View My Work</router-link>
       </div>
     </section>

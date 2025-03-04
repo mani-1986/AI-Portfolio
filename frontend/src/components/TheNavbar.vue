@@ -1,6 +1,6 @@
 <template>
     <nav class="navbar">
-      <div class="logo">My Portfolio</div>
+      <div class="logo">Manivas Portfolio</div>
       <ul class="nav-links">
         <li><router-link to="/">Home</router-link></li>
         <li><router-link to="/about">About</router-link></li>
