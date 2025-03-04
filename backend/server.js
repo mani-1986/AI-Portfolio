@@ -23,6 +23,10 @@ app.use(cors({
 }));
 app.use(express.json()); // Parse JSON request bodies
 
+// **Serve Vue frontend**
+const distPath = path.join(__dirname, '../frontend/dist');
+app.use('/AI-Portfolio', express.static(distPath));
+
 // Routes
 app.get('/api/projects', (req, res) => {
   try {
@@ -214,9 +218,11 @@ app.post('/api/chat', async (req, res) => {
 const contactRouter = require('./contactApi');
 app.use('/api', contactRouter);
 
-// **Serve Vue frontend**
-const distPath = path.join(__dirname, '../frontend/dist');
-app.use(express.static(distPath));
+// Catch-all route to serve index.html for all frontend routes
+// This handles the client-side routing for Vue app
+app.get('/AI-Portfolio/*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend/dist', 'index.html'));
+});
 
 // **Fallback to index.html for Vue history mode**
 app.get('*', (req, res) => {
