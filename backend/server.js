@@ -78,7 +78,7 @@ const identifyQueryType = (message) => {
     return "currentProject";
   }
   if (message.toLowerCase().includes("years of experience")) {
-    return "experienceYears";
+    return "yearsOfExperience";
   }
   return "projects"; // Default to projects
 };
