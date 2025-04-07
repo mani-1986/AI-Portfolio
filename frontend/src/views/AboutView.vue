@@ -9,7 +9,12 @@
     </p>
 
     <h3>Skills</h3>
-    <div class="skills-grid">
+    <!-- Display a loading message while skills are being fetched -->
+    <div v-if="isLoading">
+      <p>Loading skills...</p>
+    </div>
+    <!-- Once data is loaded, display the skills grid -->
+    <div class="skills-grid" v-else>
       <div class="skill-category" v-for="category in skills" :key="category.category">
         <h4>{{ category.category }}</h4>
         <ul>
@@ -32,7 +37,8 @@ export default {
   name: 'AboutView',
   data() {
     return {
-      skills: [], // Initialize skills as an empty array
+      skills: [],
+      isLoading: true, // New loading state
     };
   },
   async created() {
@@ -43,6 +49,8 @@ export default {
       this.skills = data;
     } catch (error) {
       console.error('Error fetching skills:', error);
+    } finally {
+      this.isLoading = false; // Update loading state when fetch is complete
     }
   },
 };

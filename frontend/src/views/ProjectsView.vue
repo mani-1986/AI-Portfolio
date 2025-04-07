@@ -1,7 +1,10 @@
 <template>
   <section class="projects">
     <h2>My Projects</h2>
-    <div class="project-grid">
+    <div v-if="isLoading">
+      <p>Loading skills...</p>
+    </div>
+    <div class="project-grid" v-else>
       <div class="project-card" v-for="project in projects" :key="project.id">
         <h3>{{ project.name }}</h3>
         <p>{{ project.description }}</p>
@@ -21,6 +24,7 @@ export default {
   data() {
     return {
       projects: [],
+      isLoading: true,
     };
   },
   async created() {
@@ -29,6 +33,8 @@ export default {
       this.projects = await response.json();
     } catch (error) {
       console.error('Error fetching projects:', error);
+    } finally {
+      this.isLoading = false; // Update loading state when fetch is complete
     }
   },
 };
